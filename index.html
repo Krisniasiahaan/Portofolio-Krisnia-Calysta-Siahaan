@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Krisnia Calysta Siahaan | Portfolio</title>
+    <style>
+        /* CSS Variables for Light/Dark Mode - macOS Indigo Accent */
+        :root {
+            --bg-color: #f5f5f7;
+            --text-main: #1d1d1f;
+            --text-muted: #86868b;
+            --accent: #5e5ce6; /* Apple Indigo */
+            --card-bg: #ffffff;
+            --nav-bg: rgba(255, 255, 255, 0.8);
+            --font-stack: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --transition-speed: 0.3s;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #000000;
+            --text-main: #f5f5f7;
+            --text-muted: #86868b;
+            --accent: #5e5ce6;
+            --card-bg: #1c1c1e;
+            --nav-bg: rgba(0, 0, 0, 0.8);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-stack);
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            transition: background-color var(--transition-speed), color var(--transition-speed);
+        }
+
+        /* Navbar */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            background: var(--nav-bg);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: background var(--transition-speed);
+        }
+
+        nav .logo {
+            font-weight: 700;
+            font-size: 1.2rem;
+            letter-spacing: -0.5px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+            align-items: center;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-main);
+            font-size: 0.9rem;
+            transition: color var(--transition-speed);
+        }
+
+        nav a:hover {
+            color: var(--accent);
+        }
+
+        #theme-toggle {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 5px;
+            color: var(--text-main);
+        }
+
+        section {
+            padding: 100px 5% 60px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .fade-in.appear {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding-top: 150px;
+            padding-bottom: 80px;
+        }
+
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 20px;
+            border: 3px solid var(--accent);
+            padding: 3px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            letter-spacing: -1.5px;
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
+
+        .hero h2 {
+            font-size: 1.5rem;
+            color: var(--text-muted);
+            font-weight: 400;
+            margin-bottom: 30px;
+        }
+
+        .hero p {
+            max-width: 650px;
+            margin: 0 auto 40px;
+            font-size: 1.1rem;
+            color: var(--text-muted);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--text-main);
+            color: var(--bg-color);
+            padding: 12px 24px;
+            border-radius: 980px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background var(--transition-speed), transform 0.2s;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--text-main);
+            border: 1px solid var(--text-main);
+        }
+
+        .btn-outline:hover {
+            background: var(--text-main);
+            color: var(--bg-color);
+        }
+
+        /* Section Headers */
+        h3.section-title {
+            font-size: 2rem;
+            margin-bottom: 40px;
+            letter-spacing: -0.5px;
+            text-align: center;
+        }
+
+        /* Cards Layout */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 18px;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+        }
+
+        .card-img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            background-color: #e8e8ed; 
+        }
+
+        .card-content {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card h4 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .card .date {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .card p {
+            flex-grow: 1;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+
+        .project-link {
+            text-decoration: none;
+            color: var(--accent);
+            font-weight: 500;
+            font-size: 0.9rem;
+            display: inline-block;
+        }
+
+        .project-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Skills Tags */
+        .skills-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .skill-tag {
+            background: var(--card-bg);
+            border: 1px solid var(--text-muted);
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: background var(--transition-speed);
+        }
+
+        .skill-tag:hover {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px 5%;
+            background: var(--card-bg);
+            margin-top: 60px;
+            color: var(--text-muted);
+            transition: background var(--transition-speed);
+        }
+
+        .social-links a {
+            margin: 0 10px;
+            color: var(--text-main);
+            text-decoration: none;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">Krisnia Calysta Siahaan</div>
+        <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><button id="theme-toggle" aria-label="Toggle Dark Mode">🌚</button></li>
+        </ul>
+    </nav>
+
+    <section class="hero fade-in" id="about">
+        <img src="pp nia.jpeg" alt="Krisnia Calysta Siahaan" class="profile-img" onerror="this.src='https://via.placeholder.com/150/e8e8ed/86868b?text=Profile'">
+        
+        <h1>Hi, I'm Krisnia.</h1>
+        <h2>Information System Student</h2>
+        <p>I am an Information Systems student with interdisciplinary expertise in data analysis and UI/UX design. I transform complex data into actionable insights and craft user-centered digital solutions. Eager to bring my analytical perspective to the Apple Developer Academy.</p>
+        
+        <div class="btn-group">
+            <a href="#projects" class="btn">View My Work</a>
+            <a href="cv-nia.pdf" class="btn btn-outline" download>Open CV</a>
+        </div>
+    </section>
+
+    <section id="experience" class="fade-in">
+        <h3 class="section-title">Professional Experience</h3>
+        <div class="grid-container">
+            <div class="card">
+                <div class="card-content">
+                    <h4>PMO Intern (Data Analysis & App Support)</h4>
+                    <span class="date">PT Dayamitra Telekomunikasi (Mitratel) | Jun 2025 - Aug 2025</span>
+                    <p>Supported the Project Management Office by validating operational data, checking data quality, and improving reporting accuracy. Collaborated to enhance internal applications (Mcyclopedia) and verify UI/UX usability.</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-content">
+                    <h4>Information Systems Student</h4>
+                    <span class="date">Institut Teknologi Del | 2022 - 2026 (Expected)</span>
+                    <p>Focusing on Data Analytics and Systems Analysis. Currently conducting a thesis on Data Analysis and Evidence Synthesis using Systematic Literature Review (SLR) regarding Generative AI.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="fade-in">
+        <h3 class="section-title">Featured Projects</h3>
+        <div class="grid-container">
+            <div class="card">
+                <img src="healthcare.png" alt="Healthcare ROI Visualization" class="card-img" onerror="this.src='https://via.placeholder.com/400x200/e8e8ed/86868b?text=Tableau+Dashboard'">
+                <div class="card-content">
+                    <h4>Healthcare ROI Data Story</h4>
+                    <p>Analyzed global healthcare expenditure and life expectancy data using Tableau. Transformed complex datasets into visual narratives to reveal spending inefficiencies and benchmark healthcare system performance.</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="powerbi.png" alt="Data Warehouse & BI" class="card-img" onerror="this.src='https://via.placeholder.com/400x200/e8e8ed/86868b?text=Data+Warehouse'">
+                <div class="card-content">
+                    <h4>Data Warehouse & BI Solution</h4>
+                    <p>Designed dimensional models and implemented ETL pipelines to consolidate IT Del student admission data. Created interactive dashboards to support data-driven strategic planning.</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="dco.png" alt="Del Corner Cafe UI/UX" class="card-img" onerror="this.src='https://via.placeholder.com/400x200/e8e8ed/86868b?text=UI/UX+Design'">
+                <div class="card-content">
+                    <h4>Del Corner Cafe Management</h4>
+                    <p>Designed and developed a user-centered digital cafe management system. Conducted system requirements analysis to streamline ordering, menu updates, and transaction tracking.</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="genai.png" alt="GenAI Research" class="card-img" onerror="this.src='https://via.placeholder.com/400x200/e8e8ed/86868b?text=GenAI+Research'">
+                <div class="card-content">
+                    <h4>GenAI in Customer Discovery</h4>
+                    <p>Conducted thesis research validating the adoption of Generative AI in startup customer discovery. Leveraged the HACAF Framework to evaluate data usage and generate evidence-based insights.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills" class="fade-in">
+        <h3 class="section-title">Core Competencies</h3>
+        <div class="skills-wrapper">
+            <span class="skill-tag">Data Analysis & Visualization</span>
+            <span class="skill-tag">UI/UX Design</span>
+            <span class="skill-tag">System Requirements Analysis</span>
+            <span class="skill-tag">Tableau</span>
+            <span class="skill-tag">Python & SQL</span>
+            <span class="skill-tag">Business Intelligence</span>
+            <span class="skill-tag">Problem Solving</span>
+        </div>
+    </section>
+
+    <footer>
+        <div class="social-links" style="margin-bottom: 20px;">
+            <a href="https://linkedin.com/in/krisniacalysta" target="_blank">LinkedIn</a>
+            <a href="mailto:krisniacalysta@gmail.com">Email Me</a>
+        </div>
+        <p>&copy; 2026 Krisnia Calysta Siahaan.</p>
+    </footer>
+
+    <script>
+        // Dark Mode Logic
+        const themeToggle = document.getElementById('theme-toggle');
+        const currentTheme = localStorage.getItem('theme');
+
+        if (currentTheme) {
+            document.documentElement.setAttribute('data-theme', currentTheme);
+        }
+
+        themeToggle.addEventListener('click', () => {
+            let theme = document.documentElement.getAttribute('data-theme');
+            if (theme === 'dark') {
+                document.documentElement.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+
+        // Scroll Animation Logic
+        const faders = document.querySelectorAll('.fade-in');
+        const appearOptions = {
+            threshold: 0.15,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const appearOnScroll = new IntersectionObserver(function(entries, observer) {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                entry.target.classList.add('appear');
+                observer.unobserve(entry.target);
+            });
+        }, appearOptions);
+
+        faders.forEach(fader => {
+            appearOnScroll.observe(fader);
+        });
+    </script>
+</body>
+</html>
